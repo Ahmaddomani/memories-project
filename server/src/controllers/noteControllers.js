@@ -1,4 +1,4 @@
-import Note from "../models/notesModel.js";
+import Note from "../models/NotesModel.js";
 import { apiFeatures } from "../utils/apiFeatures.js";
 import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import customError from "../utils/customError.js";
