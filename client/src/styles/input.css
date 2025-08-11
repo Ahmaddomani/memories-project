@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #000 !important; /* لون الخط داخل autofill */
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.login input,
+.signup input {
+  width: 100% !important;
+  padding: 10px;
+  border: none !important;
+  outline: none !important;
+  border-bottom: 2px solid #ccc !important;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: transparent !important;
+}
+.login input:first-of-type,
+.signup input:first-of-type {
+  margin-bottom: 25px !important;
+}
+
+span.border {
+  display: block !important;
+  position: absolute;
+  left: 0 !important;
+  bottom: 25px !important;
+  width: 0 !important;
+  height: 2px !important;
+  background-color: #cf0a1a !important;
+  border: none;
+}
+form.login-form > div {
+  position: relative;
+}
+.login input:focus ~ span,
+.signup input:focus ~ span {
+  width: 100% !important;
+}

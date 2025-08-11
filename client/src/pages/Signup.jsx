@@ -1,0 +1,156 @@
+import { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import axios from "axios";
+
+export const Signup = () => {
+  const [forms, setForms] = useState({
+    email: "",
+    password: "",
+    userName: "",
+    confirmPassword: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const ref = useRef(null);
+
+  const navigator = useNavigate();
+
+  const createPost = async () => {
+    const { email, password, confirmPassword, userName } = forms;
+    try {
+      setLoading(true);
+      await axios.post(
+        "http://localhost:3000/api/v1/users/signup",
+        { userName, email, password, confirmPassword },
+        { withCredentials: true }
+      );
+      navigator("/");
+    } catch (error) {
+      console.log(error);
+      setErr(error.response?.data?.message || "Signup failed");
+      ref.current.textContent = err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForms((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createPost();
+  };
+
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1e293b] font-sans px-4">
+      <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20 text-white">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Create Account 🚀
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="flex flex-col">
+            <label htmlFor="userName" className="mb-1 text-sm text-gray-300">
+              Username
+            </label>
+            <input
+              onChange={handleChange}
+              required
+              type="text"
+              name="userName"
+              id="userName"
+              placeholder="Your name"
+              className="rounded-md px-4 py-2 bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="email" className="mb-1 text-sm text-gray-300">
+              Email
+            </label>
+            <input
+              onChange={handleChange}
+              required
+              type="email"
+              name="email"
+              id="email"
+              placeholder="you@example.com"
+              className="rounded-md px-4 py-2 bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            />
+          </div>
+
+          <div className="flex flex-col relative">
+            <label htmlFor="password" className="mb-1 text-sm text-gray-300">
+              Password
+            </label>
+            <input
+              onChange={handleChange}
+              required
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
+              placeholder="Your Password"
+              className="rounded-md px-4 py-2 pr-10 bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-[35px] text-sm text-blue-300 hover:text-blue-200"
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+
+          <div className="flex flex-col relative">
+            <label
+              htmlFor="confirmPassword"
+              className="mb-1 text-sm text-gray-300"
+            >
+              Confirm Password
+            </label>
+            <input
+              onChange={handleChange}
+              required
+              type={showConfirm ? "text" : "password"}
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder=" Confirm Password"
+              className="rounded-md px-4 py-2 pr-10 bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirm(!showConfirm)}
+              className="absolute right-3 top-[35px] text-sm text-blue-300 hover:text-blue-200"
+            >
+              {showConfirm ? "Hide" : "Show"}
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-2 rounded-md bg-gradient-to-r from-blue-500 to-rose-500 text-white font-semibold hover:opacity-90 transition"
+          >
+            {loading ? "Signing up..." : "Sign up"}
+          </button>
+        </form>
+
+        <p
+          ref={ref}
+          className="mt-4 text-center text-sm text-red-400 animate-pulse"
+        ></p>
+
+        <p className="mt-6 text-center text-sm text-gray-300">
+          Already have an account?{" "}
+          <Link to="/login" className="underline text-blue-400">
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+};
