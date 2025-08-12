@@ -29,7 +29,7 @@ export const Home = () => {
     try {
       console.log(editForm);
       const response = await axios.patch(
-        `http://localhost:3000/api/v1/notes/${id}`,
+        `https://memories-project-backend-0pt4.onrender.com/api/v1/notes/${id}`,
         editForm,
         { withCredentials: true }
       );
@@ -44,9 +44,12 @@ export const Home = () => {
 
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/notes/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://memories-project-backend-0pt4.onrender.com/api/v1/notes/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setNotes((prev) => ({
         ...prev,
         data: prev.data.filter((note) => note._id !== id),
@@ -60,7 +63,7 @@ export const Home = () => {
     try {
       setDoneLoadingId(id);
       await axios.patch(
-        `http://localhost:3000/api/v1/notes/${id}`,
+        `https://memories-project-backend-0pt4.onrender.com/api/v1/notes/${id}`,
         { Done: true },
         { withCredentials: true }
       );
@@ -79,9 +82,12 @@ export const Home = () => {
 
   const fetchNotes = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/notes", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "https://memories-project-backend-0pt4.onrender.com/api/v1/notes",
+        {
+          withCredentials: true,
+        }
+      );
 
       if (response.data.length > 0) {
         setTimeout(() => {

@@ -21,7 +21,7 @@ export const CreateNote = () => {
     try {
       setLoader(true);
       await axios.post(
-        "http://localhost:3000/api/v1/notes/",
+        "https://memories-project-backend-0pt4.onrender.com//api/v1/notes/",
         {
           title: form.title,
           content: form.content,

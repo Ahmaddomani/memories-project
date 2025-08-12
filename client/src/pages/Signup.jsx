@@ -22,7 +22,7 @@ export const Signup = () => {
     try {
       setLoading(true);
       await axios.post(
-        "http://localhost:3000/api/v1/users/signup",
+        "https://memories-project-backend-0pt4.onrender.com/api/v1/users/signup",
         { userName, email, password, confirmPassword },
         { withCredentials: true }
       );
