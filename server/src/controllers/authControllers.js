@@ -22,8 +22,9 @@ const createSendResponse = (user, statusCode, res, message) => {
 
   const options = {
     maxAge: 10 * 24 * 3600 * 1000, // 10 days
-    secure: process.env.NODE_ENV === "production", // you cant use this in http tou need https
+    secure: process.env.NODE_ENV === "production", // you cant use this in http you need https
     httpOnly: true, // For just not be read
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   };
 
   res.cookie("jwt", token, options);
