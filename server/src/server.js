@@ -35,7 +35,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://192.168.1.111:3000",
-      "https://rich-news.surge.sh/",
+      "https://rich-news.surge.sh",
     ],
     credentials: true,
   })
